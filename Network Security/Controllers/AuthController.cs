@@ -109,6 +109,8 @@ namespace NetworkSecurityApp.Controllers
             }
             else if (user.Role.Name == "User")
             {
+                TempData["Username"] = decryptedUsername;
+                TempData["Email"] = decryptedEmail;
                 return RedirectToAction("Index", "User");
             }
 

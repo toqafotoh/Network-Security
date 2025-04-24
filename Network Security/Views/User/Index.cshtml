@@ -1,7 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "User Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var username = TempData["Username"];
+    var email = TempData["Email"];
 }
 
-<h1>Hey user</h1>
-
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 text-primary mb-3">Welcome, @username 👋</h1>
+        <p class="lead text-muted">Your email: <strong>@email</strong></p>
+        <p class="lead text-muted">This is your personal dashboard. From here, you can manage your account, view your data, and access features available to you.</p>
+        <hr />
+    </div>
+</div>
