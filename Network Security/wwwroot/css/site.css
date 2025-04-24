@@ -1,0 +1,89 @@
+﻿html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    margin : 20px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+}
+/* ===== NAVBAR ===== */
+
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    color: #007bff;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    margin-bottom:20px;
+}
+
+    .navbar-brand:hover {
+        color: #0056b3;
+    }
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+    .nav-link:hover {
+        background-color: #f0f0f0;
+        text-decoration: none;
+    }
+
+/* ===== PAGE WRAPPER ===== */
+
+.container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    margin-top: 2rem; /* أهم نقطة لإبعاد المحتوى عن النافبار */
+}
+
+/* ===== ICONS INSIDE LINKS OR BUTTONS ===== */
+
+.nav-link i, .btn i {
+    font-size: 1rem;
+    margin-right: 0.3rem;
+}
+
+/* ===== CONTAINER WRAPPER ===== */
+
+.container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== FOCUS STYLES ===== */
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
