@@ -122,37 +122,21 @@ namespace NetworkSecurityApp.Controllers
         [HttpPost]
         public IActionResult Logout()
         {
+            var refreshToken = HttpContext.Session.GetString("refreshToken");
+
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                var token = _db.RefreshTokens.FirstOrDefault(r => r.Token == refreshToken);
+                if (token != null)
+                {
+                    token.IsRevoked = true;
+                    _db.SaveChanges();
+                }
+            }
+
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Refresh([FromBody] string token)
-        {
-            // Validate the refresh token
-            var stored = await _db.RefreshTokens
-                .Include(r => r.User).ThenInclude(u => u.Role)
-                .FirstOrDefaultAsync(r => r.Token == token);
-
-            if (stored == null || stored.Expires < DateTime.UtcNow || stored.IsRevoked)
-            {
-                return Unauthorized(new { message = "Invalid refresh token." });
-            }
-
-            // Revoke the old token
-            stored.IsRevoked = true;
-            var accessToken = _jwt.GenerateAccessToken(stored.User);
-            var newRefresh = _jwt.GenerateRefreshToken(stored.UserId);
-
-            _db.RefreshTokens.Add(newRefresh);
-            await _db.SaveChangesAsync();
-
-            // Return the new tokens in the response
-            return Ok(new
-            {
-                AccessToken = accessToken,
-                RefreshToken = newRefresh.Token
-            });
-        }
     }
 }

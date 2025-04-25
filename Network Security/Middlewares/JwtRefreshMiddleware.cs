@@ -74,3 +74,18 @@ public class JwtRefreshMiddleware
         await _next(context);
     }
 }
+
+/*
+ 
+OR we may use the same refresh token 
+
+if (stored != null)
+{
+    var newAccess = jwt.GenerateAccessToken(stored.User);
+    await db.SaveChangesAsync();
+    context.Session.SetString("accessToken", newAccess);
+    context.Session.SetString("refreshToken", stored.Token);
+    accessToken = newAccess;
+}
+
+*/
