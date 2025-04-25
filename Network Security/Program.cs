@@ -84,7 +84,8 @@ app.UseRouting();
 app.UseSession();
 
 // Inject the JWT from session into the Authorization header on each request
-app.UseMiddleware<JwtHeaderMiddleware>();
+//app.UseMiddleware<JwtHeaderMiddleware>();
+app.UseMiddleware<JwtRefreshMiddleware>();
 
 // Authenticate requests and enforce authorization
 app.UseAuthentication();

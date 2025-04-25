@@ -1,9 +1,9 @@
 ﻿@{
     ViewData["Title"] = "User Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var username = TempData["Username"];
-    var email = TempData["Email"];
-}
+    var username = Context.Session.GetString("username");
+    var email = Context.Session.GetString("email");
+}س
 
 <div class="container mt-5">
     <div class="text-center">

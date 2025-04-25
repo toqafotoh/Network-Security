@@ -101,6 +101,7 @@ namespace NetworkSecurityApp.Controllers
             HttpContext.Session.SetString("accessToken", accessToken);
             HttpContext.Session.SetString("refreshToken", refreshToken.Token);
             HttpContext.Session.SetString("username", decryptedUsername);
+            HttpContext.Session.SetString("email", decryptedEmail);
             HttpContext.Session.SetString("role", user.Role.Name);
 
             if (user.Role.Name == "Admin")
