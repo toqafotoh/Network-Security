@@ -53,20 +53,39 @@ namespace NetworkSecurityApp.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        // Generates a secure random Refresh Token for the user
         public RefreshToken GenerateRefreshToken(int userId)
         {
             var jwtCfg = _config.GetSection("Jwt");
 
+            // Try to parse minutes
+            bool minutesParsed = double.TryParse(jwtCfg["RefreshTokenExpirationMinutes"], out double minutes);
+            bool daysParsed = double.TryParse(jwtCfg["RefreshTokenExpirationDays"], out double days);
+
+            // Set expiration time based on available config
+            DateTime expires;
+            if (minutesParsed)
+            {
+                expires = DateTime.UtcNow.AddMinutes(minutes);
+            }
+            else if (daysParsed)
+            {
+                expires = DateTime.UtcNow.AddDays(days);
+            }
+            else
+            {
+                throw new Exception("Invalid refresh token expiration settings in configuration.");
+            }
+
             var rt = new RefreshToken
             {
-                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)), // Secure 64-byte random string
-                Expires = DateTime.UtcNow.AddDays(double.Parse(jwtCfg["RefreshTokenExpirationDays"])), // Expiration date from config
-                UserId = userId,            // Associate the token with the specific user
-                IsRevoked = false           // New token is valid by default
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                Expires = expires,
+                UserId = userId,
+                IsRevoked = false
             };
 
             return rt;
         }
+
     }
 }

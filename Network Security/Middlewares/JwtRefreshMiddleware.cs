@@ -44,21 +44,13 @@ public class JwtRefreshMiddleware
 
                 if (stored != null)
                 {
-                    // Revoke the old refresh token
-                    stored.IsRevoked = true;
-                    // Generate new tokens
                     var newAccess = jwt.GenerateAccessToken(stored.User);
-                    var newRefresh = jwt.GenerateRefreshToken(stored.UserId);
-
-                    db.RefreshTokens.Add(newRefresh);
                     await db.SaveChangesAsync();
-
-                    // Update session with new tokens
                     context.Session.SetString("accessToken", newAccess);
-                    context.Session.SetString("refreshToken", newRefresh.Token);
-
+                    context.Session.SetString("refreshToken", stored.Token);
                     accessToken = newAccess;
                 }
+
                 else
                 {
                     // Invalid or expired refresh token -> clear session
@@ -81,18 +73,16 @@ public class JwtRefreshMiddleware
         await _next(context);
     }
 }
-
 /*
- 
-OR we may use the same refresh token 
-
-if (stored != null)
-{
-    var newAccess = jwt.GenerateAccessToken(stored.User);
-    await db.SaveChangesAsync();
-    context.Session.SetString("accessToken", newAccess);
-    context.Session.SetString("refreshToken", stored.Token);
-    accessToken = newAccess;
-}
-
+                if (stored != null)
+                {
+                    stored.IsRevoked = true;
+                    var newAccess = jwt.GenerateAccessToken(stored.User);
+                    var newRefresh = jwt.GenerateRefreshToken(stored.UserId);
+                    db.RefreshTokens.Add(newRefresh);
+                    await db.SaveChangesAsync();
+                    context.Session.SetString("accessToken", newAccess);
+                    context.Session.SetString("refreshToken", newRefresh.Token);
+                    accessToken = newAccess;
+                }
 */
