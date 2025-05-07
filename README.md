@@ -23,7 +23,7 @@ This project demonstrates essential security practices in web applications, incl
 The application provides clear feedback when access is denied due to authentication or authorization failures.
 
 ### Unauthorized Access
-![Unauthorized Error](images/unauthorized.png)
+![Unauthorized Error](Network Security/images/unauthorized.png)
 
 ### Forbidden Access
-![Forbidden Error](images/forbidden.png)
+![Forbidden Error](Network Security/images/forbidden.png)
